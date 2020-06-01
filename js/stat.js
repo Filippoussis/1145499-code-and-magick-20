@@ -51,10 +51,10 @@
       }
 
       ctx.beginPath();
-      ctx.moveTo(CLOUD_X + PADDING_LEFT + i * GAP_COLUMN + i * WIDTH_COLUMN, CLOUD_HEIGHT - 3 * MIN_INDENT);
-      ctx.lineTo(CLOUD_X + PADDING_LEFT + i * GAP_COLUMN + i * WIDTH_COLUMN, CLOUD_HEIGHT - 2 * MIN_INDENT - times[i] / maxTime * MAX_HEIGHT_COLUMN);
-      ctx.lineTo(CLOUD_X + PADDING_LEFT + i * GAP_COLUMN + i * WIDTH_COLUMN + WIDTH_COLUMN, CLOUD_HEIGHT - 2 * MIN_INDENT - times[i] / maxTime * MAX_HEIGHT_COLUMN);
-      ctx.lineTo(CLOUD_X + PADDING_LEFT + i * GAP_COLUMN + i * WIDTH_COLUMN + WIDTH_COLUMN, CLOUD_HEIGHT - 3 * MIN_INDENT);
+      ctx.moveTo(CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN, CLOUD_HEIGHT - 3 * MIN_INDENT);
+      ctx.lineTo(CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN, CLOUD_HEIGHT - 2 * MIN_INDENT - times[j] / maxTime * MAX_HEIGHT_COLUMN);
+      ctx.lineTo(CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN + WIDTH_COLUMN, CLOUD_HEIGHT - 2 * MIN_INDENT - times[j] / maxTime * MAX_HEIGHT_COLUMN);
+      ctx.lineTo(CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN + WIDTH_COLUMN, CLOUD_HEIGHT - 3 * MIN_INDENT);
       ctx.fill();
       ctx.closePath();
     }
