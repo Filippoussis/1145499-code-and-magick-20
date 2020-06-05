@@ -71,8 +71,7 @@
 
   var renderWizard = function (firstName, firstNames, lastName, lastNames, coatColor, coatColors, eyesColor, eyesColors, minIndex, maxIndexFirstName, maxIndexLastName, maxIndexCoatColor, maxIndexEyesColor) {
     return {
-      firstName: firstName(firstNames, minIndex, maxIndexFirstName),
-      lastName: lastName(lastNames, minIndex, maxIndexLastName),
+      name: firstName(firstNames, minIndex, maxIndexFirstName) + ' ' + lastName(lastNames, minIndex, maxIndexLastName),
       coatColor: coatColor(coatColors, minIndex, maxIndexCoatColor),
       eyesColor: eyesColor(eyesColors, minIndex, maxIndexEyesColor),
     };
@@ -96,7 +95,7 @@
   var getWizardElement = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
 
-    wizardElement.querySelector('.setup-similar-label').textContent = wizard.firstName + ' ' + wizard.lastName;
+    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
     wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
     wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
 
