@@ -16,7 +16,7 @@
   var MIN_SATURATION = 0;
   var MAX_SATURATION = 100;
 
-  window.renderStatistics = function (ctx, players, times) {
+  window.getCloud = function (ctx) {
     var gradient = ctx.createLinearGradient(CLOUD_X, CLOUD_Y, CLOUD_WIDTH, CLOUD_HEIGHT);
     gradient.addColorStop(0, 'blue');
     gradient.addColorStop(1, 'pink');
@@ -31,6 +31,11 @@
     ctx.fillText('Ура вы победили!', CLOUD_X + PADDING_LEFT, CLOUD_Y + 3 * MIN_INDENT);
     ctx.fillStyle = 'black';
     ctx.fillText('Список результатов:', CLOUD_X + PADDING_LEFT, CLOUD_Y + 5 * MIN_INDENT);
+  };
+
+  window.renderStatistics = function (ctx, players, times) {
+
+    window.getCloud(ctx);
 
     var maxTime = times[0];
     for (var i = 1; i < times.length; i++) {
