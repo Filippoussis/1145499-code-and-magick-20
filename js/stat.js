@@ -16,10 +16,6 @@
   var MIN_SATURATION = 0;
   var MAX_SATURATION = 100;
 
-  function inRad(num) {
-    return num * Math.PI / 180;
-  }
-
   window.getCloud = function (ctx) {
     var gradient = ctx.createLinearGradient(CLOUD_X, CLOUD_Y, CLOUD_WIDTH, CLOUD_HEIGHT);
     gradient.addColorStop(0, 'blue');
