@@ -16,7 +16,7 @@
   var MIN_SATURATION = 0;
   var MAX_SATURATION = 100;
 
-  window.renderStatistics = function (ctx, players, times) {
+  window.getCloud = function (ctx) {
     var gradient = ctx.createLinearGradient(CLOUD_X, CLOUD_Y, CLOUD_WIDTH, CLOUD_HEIGHT);
     gradient.addColorStop(0, 'blue');
     gradient.addColorStop(1, 'pink');
@@ -31,6 +31,11 @@
     ctx.fillText('Ура вы победили!', CLOUD_X + PADDING_LEFT, CLOUD_Y + 3 * MIN_INDENT);
     ctx.fillStyle = 'black';
     ctx.fillText('Список результатов:', CLOUD_X + PADDING_LEFT, CLOUD_Y + 5 * MIN_INDENT);
+  };
+
+  window.renderStatistics = function (ctx, players, times) {
+
+    window.getCloud(ctx);
 
     var maxTime = times[0];
     for (var i = 1; i < times.length; i++) {
@@ -41,24 +46,13 @@
 
     for (var j = 0; j < players.length; j++) {
       ctx.fillStyle = 'black';
-      ctx.fillText(Math.round(times[j]), CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN, CLOUD_HEIGHT - 3 * MIN_INDENT - times[j] / maxTime * MAX_HEIGHT_COLUMN);
+      ctx.fillText(Math.round(times[j]), CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN, CLOUD_HEIGHT - 4 * MIN_INDENT - times[j] / maxTime * MAX_HEIGHT_COLUMN);
       ctx.fillText(players[j], CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN, CLOUD_HEIGHT - MIN_INDENT);
 
-      if (players[j] === 'Вы') {
-        ctx.fillStyle = MYSELF_BGCOLOR;
-      } else {
-        ctx.fillStyle = 'hsl(240, ' + Math.floor(MIN_SATURATION + Math.random() * (MAX_SATURATION + 1 - MIN_SATURATION)) + '%, 50%)';
-      }
+      ctx.fillStyle = (players[j] === 'Вы') ? MYSELF_BGCOLOR : 'hsl(240, ' + Math.floor(MIN_SATURATION + Math.random() * (MAX_SATURATION + 1 - MIN_SATURATION)) + '%, 50%)';
 
-      ctx.beginPath();
-      ctx.moveTo(CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN, CLOUD_HEIGHT - 3 * MIN_INDENT);
-      ctx.lineTo(CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN, CLOUD_HEIGHT - 2 * MIN_INDENT - times[j] / maxTime * MAX_HEIGHT_COLUMN);
-      ctx.lineTo(CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN + WIDTH_COLUMN, CLOUD_HEIGHT - 2 * MIN_INDENT - times[j] / maxTime * MAX_HEIGHT_COLUMN);
-      ctx.lineTo(CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN + WIDTH_COLUMN, CLOUD_HEIGHT - 3 * MIN_INDENT);
-      ctx.fill();
-      ctx.closePath();
+      ctx.fillRect(CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN, CLOUD_HEIGHT - 3 * MIN_INDENT, WIDTH_COLUMN, -(times[j] / maxTime * MAX_HEIGHT_COLUMN));
     }
-
   };
 
 })();
