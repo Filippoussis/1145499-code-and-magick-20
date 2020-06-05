@@ -49,11 +49,7 @@
       ctx.fillText(Math.round(times[j]), CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN, CLOUD_HEIGHT - 3 * MIN_INDENT - times[j] / maxTime * MAX_HEIGHT_COLUMN);
       ctx.fillText(players[j], CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN, CLOUD_HEIGHT - MIN_INDENT);
 
-      if (players[j] === 'Вы') {
-        ctx.fillStyle = MYSELF_BGCOLOR;
-      } else {
-        ctx.fillStyle = 'hsl(240, ' + Math.floor(MIN_SATURATION + Math.random() * (MAX_SATURATION + 1 - MIN_SATURATION)) + '%, 50%)';
-      }
+      ctx.fillStyle = (players[j] === 'Вы') ? MYSELF_BGCOLOR : 'hsl(240, ' + Math.floor(MIN_SATURATION + Math.random() * (MAX_SATURATION + 1 - MIN_SATURATION)) + '%, 50%)';
 
       ctx.beginPath();
       ctx.moveTo(CLOUD_X + PADDING_LEFT + j * GAP_COLUMN + j * WIDTH_COLUMN, CLOUD_HEIGHT - 3 * MIN_INDENT);
