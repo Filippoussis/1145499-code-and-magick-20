@@ -145,6 +145,44 @@
   similarListElement.appendChild(renderWizards());
 
   setup.querySelector('.setup-similar').classList.remove('hidden');
-  setup.classList.remove('hidden');
+
+  // Обработка событий: одеть Надежду
+
+  var setupOpen = document.querySelector('.setup-open');
+  var setupClose = document.querySelector('.setup-close');
+
+  var onSetupOpenPress = function (evt) {
+    if (evt.button === 0 || evt.key === 'Enter') {
+      openSetup();
+    }
+  };
+
+  var onSetupClosePress = function (evt) {
+    if (evt.button === 0 || evt.key === 'Enter') {
+      closeSetup();
+    }
+  };
+
+  var onSetupPressEsc = function (evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closeSetup();
+    }
+  };
+
+  var openSetup = function () {
+    setup.classList.remove('hidden');
+    document.addEventListener('keydown', onSetupPressEsc);
+  };
+
+  var closeSetup = function () {
+    setup.classList.add('hidden');
+    document.removeEventListener('keydown', onSetupPressEsc);
+  };
+
+  setupOpen.addEventListener('click', onSetupOpenPress);
+  setupOpen.addEventListener('keydown', onSetupOpenPress);
+  setupClose.addEventListener('click', onSetupClosePress);
+  setupClose.addEventListener('keydown', onSetupClosePress);
 
 })();
