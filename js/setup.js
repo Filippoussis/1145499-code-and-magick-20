@@ -3,96 +3,131 @@
 
   var NUMBER_WIZARDS = 4;
 
-  var FIRST_NAMES = [
-    'Иван',
-    'Хуан Себастьян',
-    'Мария',
-    'Кристоф',
-    'Виктор',
-    'Юлия',
-    'Люпита',
-    'Вашингтон',
-  ];
+  var Name = {
+    FIRSTS: [
+      'Иван',
+      'Хуан Себастьян',
+      'Мария',
+      'Кристоф',
+      'Виктор',
+      'Юлия',
+      'Люпита',
+      'Вашингтон',
+    ],
 
-  var LAST_NAMES = [
-    'да Марья',
-    'Верон',
-    'Мирабелла',
-    'Вальц',
-    'Онопко',
-    'Топольницкая',
-    'Нионго',
-    'Ирвинг',
-  ];
+    LASTS: [
+      'да Марья',
+      'Верон',
+      'Мирабелла',
+      'Вальц',
+      'Онопко',
+      'Топольницкая',
+      'Нионго',
+      'Ирвинг',
+    ],
+  };
 
-  var COAT_COLORS = [
-    'rgb(101, 137, 164)',
-    'rgb(241, 43, 107)',
-    'rgb(146, 100, 161)',
-    'rgb(56, 159, 117)',
-    'rgb(215, 210, 55)',
-    'rgb(0, 0, 0)',
-  ];
+  var Color = {
+    COATS: [
+      'rgb(101, 137, 164)',
+      'rgb(241, 43, 107)',
+      'rgb(146, 100, 161)',
+      'rgb(56, 159, 117)',
+      'rgb(215, 210, 55)',
+      'rgb(0, 0, 0)',
+    ],
 
-  var EYES_COLORS = [
-    'black',
-    'red',
-    'blue',
-    'yellow',
-    'green',
-  ];
+    EYES: [
+      'black',
+      'red',
+      'blue',
+      'yellow',
+      'green',
+    ],
 
-  var MIN_INDEX = 0;
-  var MAX_INDEX_FIRST_NAME = FIRST_NAMES.length - 1;
-  var MAX_INDEX_LAST_NAME = LAST_NAMES.length - 1;
-  var MAX_INDEX_COAT_COLOR = COAT_COLORS.length - 1;
-  var MAX_INDEX_EYES_COLOR = EYES_COLORS.length - 1;
+    FIREBALL: [
+      '#ee4830',
+      '#30a8ee',
+      '#5ce6c0',
+      '#e848d5',
+      '#e6e848',
+    ],
+  };
 
+  /**
+   * случайное значение из диапазона
+   * @param {number} min - минимальное значение
+   * @param {number} max - максимальное значение
+   * @return {number} случайное значение
+   */
   var getRandomBetween = function (min, max) {
-    var rand = min + Math.random() * (max + 1 - min);
-    return Math.floor(rand);
+    var random = min + Math.random() * (max + 1 - min);
+    return Math.floor(random);
   };
 
-  var getFirstName = function (firstNames, min, max) {
-    return firstNames[getRandomBetween(min, max)];
+  /**
+   * случайное значение из массива
+   * @param {array} array - исходный массив значений
+   * @return {*} случайное значение из массива
+   */
+  var getRandomElementFromArray = function (array) {
+    return array[getRandomBetween(0, array.length - 1)];
   };
 
-  var getLasttName = function (lastNames, min, max) {
-    return lastNames[getRandomBetween(min, max)];
-  };
+  /**
+   * уникальное значение из массива
+   * @param {array} array - исходный массив значений
+   * @return {function} возвращает функцию, которая при каждом новом вызове возвращает уникальное значение из массива
+   */
+  var getUniqueElementFromArray = function (array) {
+    var copyArray = array.slice();
 
-  var getCoatColor = function (coatColors, min, max) {
-    return coatColors[getRandomBetween(min, max)];
-  };
-
-  var getEyesColor = function (eyesColors, min, max) {
-    return eyesColors[getRandomBetween(min, max)];
-  };
-
-  var renderWizard = function (firstName, firstNames, lastName, lastNames, coatColor, coatColors, eyesColor, eyesColors, minIndex, maxIndexFirstName, maxIndexLastName, maxIndexCoatColor, maxIndexEyesColor) {
-    return {
-      name: firstName(firstNames, minIndex, maxIndexFirstName) + ' ' + lastName(lastNames, minIndex, maxIndexLastName),
-      coatColor: coatColor(coatColors, minIndex, maxIndexCoatColor),
-      eyesColor: eyesColor(eyesColors, minIndex, maxIndexEyesColor),
+    return function () {
+      var randomIndexArray = getRandomBetween(0, copyArray.length - 1);
+      return copyArray.splice(randomIndexArray, 1);
     };
   };
 
-  var renderSimilarWizards = function (numberWizards, firstName, firstNames, lastName, lastNames, coatColor, coatColors, eyesColor, eyesColors, minIndex, maxIndexFirstName, maxIndexLastName, maxIndexCoatColor, maxIndexEyesColor) {
+  var uniqueFirstNameFromArray = getUniqueElementFromArray(Name.FIRSTS);
+  var uniqueLastNameFromArray = getUniqueElementFromArray(Name.LASTS);
+
+  /**
+   * генерирует объект мага
+   * @return {object} возвращает объект мага с полями случайных значений
+   */
+  var generateWizard = function () {
+    return {
+      name: uniqueFirstNameFromArray() + ' ' + uniqueLastNameFromArray(),
+      coatColor: getRandomElementFromArray(Color.COATS),
+      eyesColor: getRandomElementFromArray(Color.EYES),
+    };
+  };
+
+  /**
+   * генерирует массив из объектов магов
+   * @return {array} возвращает массив из объектов магов
+   */
+  var generateWizards = function () {
     var wizards = [];
-    for (var i = 0; i < numberWizards; i++) {
-      wizards.push(renderWizard(firstName, firstNames, lastName, lastNames, coatColor, coatColors, eyesColor, eyesColors, minIndex, maxIndexFirstName, maxIndexLastName, maxIndexCoatColor, maxIndexEyesColor));
+    for (var i = 0; i < NUMBER_WIZARDS; i++) {
+      wizards.push(generateWizard());
     }
 
     return wizards;
   };
 
-  var wizards = renderSimilarWizards(NUMBER_WIZARDS, getFirstName, FIRST_NAMES, getLasttName, LAST_NAMES, getCoatColor, COAT_COLORS, getEyesColor, EYES_COLORS, MIN_INDEX, MAX_INDEX_FIRST_NAME, MAX_INDEX_LAST_NAME, MAX_INDEX_COAT_COLOR, MAX_INDEX_EYES_COLOR);
+  var wizards = generateWizards();
 
   var setup = document.querySelector('.setup');
   var similarListElement = setup.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-  var getWizardElement = function (wizard) {
+  /**
+   * отрисовывает мага
+   * @param {object} wizard - объект мага
+   * @return {HTMLElement} возвращает кастомизированный HTMLElement на основе склонированного шаблона
+   */
+  var renderWizard = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
@@ -102,15 +137,92 @@
     return wizardElement;
   };
 
-  var fragment = document.createDocumentFragment();
+  /**
+   * складывает объекты магов во фрагмент
+   * @return {HTMLElement} возвращает фрагмент
+   */
+  var renderWizards = function () {
+    var fragment = document.createDocumentFragment();
+    wizards.forEach(function (wizard) {
+      fragment.appendChild(renderWizard(wizard));
+    });
 
-  wizards.forEach(function (wizard) {
-    fragment.appendChild(getWizardElement(wizard));
-  });
+    return fragment;
+  };
 
-  similarListElement.appendChild(fragment);
+  similarListElement.appendChild(renderWizards());
 
   setup.querySelector('.setup-similar').classList.remove('hidden');
-  setup.classList.remove('hidden');
+
+  // Обработка событий: одеть Надежду
+
+  var setupOpen = document.querySelector('.setup-open');
+  var setupClose = document.querySelector('.setup-close');
+  var setupUserName = setup.querySelector('.setup-user-name');
+
+  var onSetupOpenPress = function (evt) {
+    if (evt.button === 0 || evt.key === 'Enter') {
+      evt.preventDefault();
+      openSetup();
+    }
+  };
+
+  var onSetupClosePress = function (evt) {
+    if (evt.button === 0 || evt.key === 'Enter') {
+      evt.preventDefault();
+      closeSetup();
+    }
+  };
+
+  var onSetupPressEsc = function (evt) {
+    if (evt.key === 'Escape' && setupUserName !== document.activeElement) {
+      evt.preventDefault();
+      closeSetup();
+    }
+  };
+
+  var openSetup = function () {
+    setup.classList.remove('hidden');
+    setupUserName.focus();
+    document.addEventListener('keydown', onSetupPressEsc);
+  };
+
+  var closeSetup = function () {
+    setup.classList.add('hidden');
+    document.removeEventListener('keydown', onSetupPressEsc);
+  };
+
+  setupOpen.addEventListener('click', onSetupOpenPress);
+  setupOpen.addEventListener('keydown', onSetupOpenPress);
+  setupClose.addEventListener('click', onSetupClosePress);
+  setupClose.addEventListener('keydown', onSetupClosePress);
+
+  // Кастомизация персонажа
+
+  var setupPlayer = setup.querySelector('.setup-player');
+  var wizardCoat = setupPlayer.querySelector('.wizard-coat');
+  var inputCoatColor = setupPlayer.querySelector('input[name = "coat-color"]');
+  var wizardEyes = setupPlayer.querySelector('.wizard-eyes');
+  var inputEyesColor = setupPlayer.querySelector('input[name = "eyes-color"]');
+  var wizardFireball = setupPlayer.querySelector('.setup-fireball-wrap');
+  var inputFireballColor = setupPlayer.querySelector('input[name = "fireball-color"]');
+
+  wizardCoat.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    var randomCoatColor = getRandomElementFromArray(Color.COATS);
+    inputCoatColor.value = wizardCoat.style.fill = randomCoatColor;
+  });
+
+  wizardEyes.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    var randomEyesColor = getRandomElementFromArray(Color.EYES);
+    inputEyesColor.value = wizardEyes.style.fill = randomEyesColor;
+  });
+
+  wizardFireball.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    var randomFireballColor = getRandomElementFromArray(Color.FIREBALL);
+    inputFireballColor.value = wizardFireball.style.backgroundColor = randomFireballColor;
+  });
 
 })();
