@@ -105,18 +105,19 @@
 
   /**
    * генерирует массив из объектов магов
+   * @param {number} numberWizards - количество магов
    * @return {array} возвращает массив из объектов магов
    */
-  var generateWizards = function () {
+  var generateWizards = function (numberWizards) {
     var wizards = [];
-    for (var i = 0; i < NUMBER_WIZARDS; i++) {
+    for (var i = 0; i < numberWizards; i++) {
       wizards.push(generateWizard());
     }
 
     return wizards;
   };
 
-  var wizards = generateWizards();
+  var wizardsData = generateWizards(NUMBER_WIZARDS);
 
   var setup = document.querySelector('.setup');
   var similarListElement = setup.querySelector('.setup-similar-list');
@@ -139,9 +140,10 @@
 
   /**
    * складывает объекты магов во фрагмент
+   * @param {array} wizards - массив объектов магов
    * @return {HTMLElement} возвращает фрагмент
    */
-  var renderWizards = function () {
+  var renderWizards = function (wizards) {
     var fragment = document.createDocumentFragment();
     wizards.forEach(function (wizard) {
       fragment.appendChild(renderWizard(wizard));
@@ -150,7 +152,7 @@
     return fragment;
   };
 
-  similarListElement.appendChild(renderWizards());
+  similarListElement.appendChild(renderWizards(wizardsData));
 
   setup.querySelector('.setup-similar').classList.remove('hidden');
 
@@ -160,21 +162,7 @@
   var setupClose = document.querySelector('.setup-close');
   var setupUserName = setup.querySelector('.setup-user-name');
 
-  var onSetupOpenPress = function (evt) {
-    if (evt.button === 0 || evt.key === 'Enter') {
-      evt.preventDefault();
-      openSetup();
-    }
-  };
-
-  var onSetupClosePress = function (evt) {
-    if (evt.button === 0 || evt.key === 'Enter') {
-      evt.preventDefault();
-      closeSetup();
-    }
-  };
-
-  var onSetupPressEsc = function (evt) {
+  var onSetupEscPress = function (evt) {
     if (evt.key === 'Escape' && setupUserName !== document.activeElement) {
       evt.preventDefault();
       closeSetup();
@@ -184,18 +172,37 @@
   var openSetup = function () {
     setup.classList.remove('hidden');
     setupUserName.focus();
-    document.addEventListener('keydown', onSetupPressEsc);
+    document.addEventListener('keydown', onSetupEscPress);
   };
 
   var closeSetup = function () {
     setup.classList.add('hidden');
-    document.removeEventListener('keydown', onSetupPressEsc);
+    document.removeEventListener('keydown', onSetupEscPress);
   };
 
-  setupOpen.addEventListener('click', onSetupOpenPress);
-  setupOpen.addEventListener('keydown', onSetupOpenPress);
-  setupClose.addEventListener('click', onSetupClosePress);
-  setupClose.addEventListener('keydown', onSetupClosePress);
+  setupOpen.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    openSetup();
+  });
+
+  setupOpen.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Enter') {
+      evt.preventDefault();
+      openSetup();
+    }
+  });
+
+  setupClose.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    closeSetup();
+  });
+
+  setupClose.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Enter') {
+      evt.preventDefault();
+      closeSetup();
+    }
+  });
 
   // Кастомизация персонажа
 
