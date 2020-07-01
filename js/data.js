@@ -2,12 +2,6 @@
 
 (function () {
 
-  var StartCoordsSetup = {
-    TOP: 80 + 'px',
-    LEFT: 50 + '%',
-    TRANSFORM: 'translate(-50%)',
-  };
-
   var uniqueFirstNameFromArray = window.util.getUniqueElementFromArray(window.mocks.Name.FIRSTS);
   var uniqueLastNameFromArray = window.util.getUniqueElementFromArray(window.mocks.Name.LASTS);
 
@@ -39,7 +33,6 @@
 
   window.data = {
     wizardsData: generateWizards(window.mocks.NUMBER_WIZARDS),
-    StartCoordsSetup: StartCoordsSetup,
   };
 
 })();

@@ -15,9 +15,8 @@
   };
 
   var openSetup = function () {
-    setup.style.top = window.data.StartCoordsSetup.TOP;
-    setup.style.left = window.data.StartCoordsSetup.LEFT;
-    setup.style.transform = window.data.StartCoordsSetup.TRANSFORM;
+    setup.style.top = '';
+    setup.style.left = '';
     setup.classList.remove('hidden');
     setupUserName.focus();
     document.addEventListener('keydown', onSetupEscPress);
