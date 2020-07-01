@@ -1,6 +1,6 @@
 'use strict';
 
-window.render = (function () {
+(function () {
 
   var setup = document.querySelector('.setup');
   var similarListElement = setup.querySelector('.setup-similar-list');
