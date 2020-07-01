@@ -1,6 +1,8 @@
 'use strict';
 
-window.render = (function () {
+(function () {
+
+  var MAX_SIMILAR_WIZARD_COUNT = 4;
 
   var setup = document.querySelector('.setup');
   var similarListElement = setup.querySelector('.setup-similar-list');
@@ -15,8 +17,8 @@ window.render = (function () {
     var wizardElement = similarWizardTemplate.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
 
     return wizardElement;
   };
@@ -24,18 +26,19 @@ window.render = (function () {
   /**
    * складывает объекты магов во фрагмент
    * @param {array} wizards - массив объектов магов
-   * @return {HTMLElement} возвращает фрагмент
    */
   var renderWizards = function (wizards) {
     var fragment = document.createDocumentFragment();
-    wizards.forEach(function (wizard) {
-      fragment.appendChild(renderWizard(wizard));
+    wizards.forEach(function (wizard, index) {
+      if (index < MAX_SIMILAR_WIZARD_COUNT) {
+        fragment.append(renderWizard(wizard));
+      }
     });
 
-    return fragment;
+    similarListElement.append(fragment);
   };
 
-  similarListElement.appendChild(renderWizards(window.data.wizardsData));
+  window.backend.load(renderWizards);
   setup.querySelector('.setup-similar').classList.remove('hidden');
 
 })();

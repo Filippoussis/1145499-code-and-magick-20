@@ -1,6 +1,6 @@
 'use strict';
 
-window.setup = (function () {
+(function () {
 
   var setup = document.querySelector('.setup');
   var setupOpen = document.querySelector('.setup-open');
@@ -15,6 +15,8 @@ window.setup = (function () {
   };
 
   var openSetup = function () {
+    setup.style.top = '';
+    setup.style.left = '';
     setup.classList.remove('hidden');
     setupUserName.focus();
     document.addEventListener('keydown', onSetupEscPress);
@@ -47,6 +49,14 @@ window.setup = (function () {
       evt.preventDefault();
       closeSetup();
     }
+  });
+
+  var form = setup.querySelector('.setup-wizard-form');
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), function () {
+      setup.classList.add('hidden');
+    });
+    evt.preventDefault();
   });
 
 })();

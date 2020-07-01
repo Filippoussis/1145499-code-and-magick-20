@@ -1,6 +1,6 @@
 'use strict';
 
-window.colorize = (function () {
+(function () {
 
   var setup = document.querySelector('.setup');
   var setupPlayer = setup.querySelector('.setup-player');

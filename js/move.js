@@ -1,6 +1,6 @@
 'use strict';
 
-window.move = (function () {
+(function () {
 
   var setup = document.querySelector('.setup');
   var setupHandle = setup.querySelector('.upload');
