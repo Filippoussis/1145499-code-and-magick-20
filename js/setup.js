@@ -1,6 +1,6 @@
 'use strict';
 
-window.setup = (function () {
+(function () {
 
   var setup = document.querySelector('.setup');
   var setupOpen = document.querySelector('.setup-open');
@@ -15,6 +15,9 @@ window.setup = (function () {
   };
 
   var openSetup = function () {
+    setup.style.top = window.data.StartCoordsSetup.TOP;
+    setup.style.left = window.data.StartCoordsSetup.LEFT;
+    setup.style.transform = window.data.StartCoordsSetup.TRANSFORM;
     setup.classList.remove('hidden');
     setupUserName.focus();
     document.addEventListener('keydown', onSetupEscPress);
