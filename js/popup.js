@@ -51,12 +51,4 @@
     }
   });
 
-  var form = setup.querySelector('.setup-wizard-form');
-  form.addEventListener('submit', function (evt) {
-    window.backend.save(new FormData(form), function () {
-      setup.classList.add('hidden');
-    });
-    evt.preventDefault();
-  });
-
 })();
