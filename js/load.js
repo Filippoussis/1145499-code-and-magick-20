@@ -18,36 +18,26 @@
     return rank;
   };
 
-  var namesComparator = function (left, right) {
-    if (left > right) {
-      return 1;
-    } else if (left < right) {
-      return -1;
-    } else {
-      return 0;
-    }
-  };
-
   var updateWizards = function () {
 
-    window.render.wizards(wizards.sort(function (left, right) {
+    window.render.wizards(wizards.slice().sort(function (left, right) {
       var rankDiff = getRank(right) - getRank(left);
       if (rankDiff === 0) {
-        rankDiff = namesComparator(left.name, right.name);
+        rankDiff = wizards.indexOf(left) - wizards.indexOf(right);
       }
       return rankDiff;
     }));
   };
 
-  window.filter.wizard.onEyesChange = function (color) {
+  window.filter.wizard.onEyesChange = window.debounce.on(function (color) {
     eyesColor = color;
     updateWizards();
-  };
+  });
 
-  window.filter.wizard.onCoatChange = function (color) {
+  window.filter.wizard.onCoatChange = window.debounce.on(function (color) {
     coatColor = color;
     updateWizards();
-  };
+  });
 
   var onSuccess = function (data) {
     wizards = data;
