@@ -2,37 +2,38 @@
 
 (function () {
 
-  var uniqueFirstNameFromArray = window.util.getUniqueElementFromArray(window.mocks.Name.FIRSTS);
-  var uniqueLastNameFromArray = window.util.getUniqueElementFromArray(window.mocks.Name.LASTS);
+  var NUMBER_WIZARDS = 4;
 
-  /**
-   * генерирует объект мага
-   * @return {object} возвращает объект мага с полями случайных значений
-   */
-  var generateWizard = function () {
-    return {
-      name: uniqueFirstNameFromArray() + ' ' + uniqueLastNameFromArray(),
-      coatColor: window.util.getRandomElementFromArray(window.mocks.Color.COATS),
-      eyesColor: window.util.getRandomElementFromArray(window.mocks.Color.EYES),
-    };
-  };
+  var Color = {
+    COATS: [
+      'rgb(101, 137, 164)',
+      'rgb(241, 43, 107)',
+      'rgb(146, 100, 161)',
+      'rgb(56, 159, 117)',
+      'rgb(215, 210, 55)',
+      'rgb(0, 0, 0)',
+    ],
 
-  /**
-   * генерирует массив из объектов магов
-   * @param {number} numberWizards - количество магов
-   * @return {array} возвращает массив из объектов магов
-   */
-  var generateWizards = function (numberWizards) {
-    var wizards = [];
-    for (var i = 0; i < numberWizards; i++) {
-      wizards.push(generateWizard());
-    }
+    EYES: [
+      'black',
+      'red',
+      'blue',
+      'yellow',
+      'green',
+    ],
 
-    return wizards;
+    FIREBALL: [
+      '#ee4830',
+      '#30a8ee',
+      '#5ce6c0',
+      '#e848d5',
+      '#e6e848',
+    ],
   };
 
   window.data = {
-    wizardsData: generateWizards(window.mocks.NUMBER_WIZARDS),
+    NUMBER_WIZARDS: NUMBER_WIZARDS,
+    Color: Color,
   };
 
 })();
