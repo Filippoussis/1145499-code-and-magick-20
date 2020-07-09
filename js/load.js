@@ -29,12 +29,12 @@
     }));
   };
 
-  window.filter.wizard.onEyesChange = window.debounce.on(function (color) {
+  window.filter.wizard.onEyesChange = window.debounce(function (color) {
     eyesColor = color;
     updateWizards();
   });
 
-  window.filter.wizard.onCoatChange = window.debounce.on(function (color) {
+  window.filter.wizard.onCoatChange = window.debounce(function (color) {
     coatColor = color;
     updateWizards();
   });
