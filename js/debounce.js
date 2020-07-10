@@ -18,8 +18,6 @@
     };
   };
 
-  window.debounce = {
-    on: debounce,
-  };
+  window.debounce = debounce;
 
 })();
